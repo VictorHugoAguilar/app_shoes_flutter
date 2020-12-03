@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:shop_shoes/src/widgets/custom_widgets.dart';
 
 class ShoesPage extends StatelessWidget {
@@ -17,7 +16,10 @@ class ShoesPage extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  ShoesSizePreview(),
+                  Hero(
+                    tag: 'Shoes_1',
+                    child: ShoesSizePreview(),
+                  ),
                   ShoesDescription(
                     titulo: 'Nike Air Max 720',
                     descripcion:

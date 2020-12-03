@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_shoes/src/helpers/helpers.dart';
+import 'package:shop_shoes/src/models/shoes_model.dart';
+import 'package:shop_shoes/src/pages/shoes_description.dart';
 
 class ShoesSizePreview extends StatelessWidget {
   final bool fullScreen;
@@ -7,31 +11,42 @@ class ShoesSizePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: (this.fullScreen) ? 5 : 30,
-        vertical: (this.fullScreen) ? 5 : 0,
+    return GestureDetector(
+      onTap: () {
+        cambiarStatusLight();
+
+        if (!this.fullScreen)
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => ShoesDescriptionPage()));
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: (this.fullScreen) ? 5 : 30,
+          vertical: (this.fullScreen) ? 5 : 0,
+        ),
+        child: Container(
+            width: double.infinity,
+            height: (this.fullScreen) ? 410 : 400,
+            decoration: BoxDecoration(
+              color: Color(0xffFFCF53),
+              borderRadius: (!this.fullScreen)
+                  ? BorderRadius.circular(50)
+                  : BorderRadius.only(
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50),
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    ),
+            ),
+            child: Column(
+              children: [
+                _ShoesWithShadow(),
+                if (!this.fullScreen) _ShoesSizes(),
+              ],
+            )),
       ),
-      child: Container(
-          width: double.infinity,
-          height: (this.fullScreen) ? 410 : 430,
-          decoration: BoxDecoration(
-            color: Color(0xffFFCF53),
-            borderRadius: (!this.fullScreen)
-                ? BorderRadius.circular(50)
-                : BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50),
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-          ),
-          child: Column(
-            children: [
-              _ShoesWithShadow(),
-              if (!this.fullScreen) _ShoesSizes(),
-            ],
-          )),
     );
   }
 }
@@ -39,6 +54,8 @@ class ShoesSizePreview extends StatelessWidget {
 class _ShoesWithShadow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final zapatoModel = Provider.of<ShoesModel>(context);
+
     return Padding(
       padding: EdgeInsets.all(40),
       child: Stack(
@@ -49,7 +66,7 @@ class _ShoesWithShadow extends StatelessWidget {
             child: _ShadowShoes(),
           ),
           Image(
-            image: AssetImage('assets/img/azul.png'),
+            image: AssetImage(zapatoModel.assetImage),
           ),
         ],
       ),
@@ -107,27 +124,39 @@ class _SizesShoesBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-          color: (this.numero == 9) ? Color(0xffF1A23A) : Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            if (this.numero == 9)
-              BoxShadow(
-                color: Color(0xffF1A23A),
-                blurRadius: 10,
-                offset: Offset(0, 5),
-              ),
-          ]),
-      child: Center(
-        child: Text(
-          '${numero.toString().replaceAll('.0', '')}',
-          style: TextStyle(
-            color: (this.numero == 9) ? Colors.white : Color(0xffF1A23A),
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    final zapatoModel = Provider.of<ShoesModel>(context);
+
+    return GestureDetector(
+      onTap: () {
+        final zapatoModel = Provider.of<ShoesModel>(context, listen: false);
+        zapatoModel.talla = this.numero;
+      },
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+            color: (this.numero == zapatoModel.talla)
+                ? Color(0xffF1A23A)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              if (this.numero == zapatoModel.talla)
+                BoxShadow(
+                  color: Color(0xffF1A23A),
+                  blurRadius: 10,
+                  offset: Offset(0, 5),
+                ),
+            ]),
+        child: Center(
+          child: Text(
+            '${numero.toString().replaceAll('.0', '')}',
+            style: TextStyle(
+              color: (this.numero == zapatoModel.talla)
+                  ? Colors.white
+                  : Color(0xffF1A23A),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
