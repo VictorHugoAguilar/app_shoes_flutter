@@ -1,6 +1,19 @@
-# shop_shoes
+# App Shoes Flutter
 
-A new Flutter project.
+Proyecto en flutter, con dos pantallas, una principal y la secundaria, reforzando los siguientes temas:
+
+- Hero Animation
+- Multiprovider
+- Provider como manejador de estado
+- Muchos Widgets personalizados
+- Simplificación de importaciones
+- Animate_do (unos trucos)
+- Uso de imágenes estáticas
+
+![Primaria](https://github.com/VictorHugoAguilar/app_shoes_flutter/blob/main/assets/preview/preview_primary.png?raw=true)
+![Secundaria](https://github.com/VictorHugoAguilar/app_shoes_flutter/blob/main/assets/preview/preview_secondary.png?raw=true)
+
+
 
 ## Getting Started
 
