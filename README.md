@@ -13,6 +13,12 @@ Proyecto en flutter, con dos pantallas, una principal y la secundaria, reforzand
 ![Primaria](https://github.com/VictorHugoAguilar/app_shoes_flutter/blob/main/assets/preview/preview_primary.png?raw=true)
 ![Secundaria](https://github.com/VictorHugoAguilar/app_shoes_flutter/blob/main/assets/preview/preview_secondary.png?raw=true)
 
+## Dependencias Instaladas
+`````
+dependencies:
+  animate_do: ^1.7.3
+  provider: ^4.3.2+2
+`````
 
 
 ## Getting Started
